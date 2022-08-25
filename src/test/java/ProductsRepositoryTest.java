@@ -8,24 +8,47 @@ public class ProductsRepositoryTest {
     Smartphone item3 = new Smartphone (3, "X12", 54, "Xiomi");
     Smartphone item4 = new Smartphone (4, "S21 Ultra", 89, "Samsung");
 
+    ProductsRepository repo = new ProductsRepository();
+
+
     @Test
     public void shouldDeleteProductsById (){
-        ProductsRepository repo = new ProductsRepository();
         repo.save(item1);
         repo.save(item2);
         repo.save(item3);
         repo.save(item4);
-        repo.removeById(item2.getId());
+        Product[] expected ={item1, item3, item4};
+        Product[] actual = repo.removeById(2);
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldThrowErrorMessage (){
+        repo.save(item1);
+        repo.save(item2);
+        repo.save(item3);
+        repo.save(item4);
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            repo.removeById(44);
+        });
+    }
+
+    @Test
+    public void shouldDeleteProducts (){
+        repo.save(item1);
+        repo.save(item2);
+        repo.save(item3);
+        repo.save(item4);
         repo.removeById(item3.getId());
 
-        Product[] expected ={item1, item4};
+        Product[] expected ={item1, item2, item4};
         Product[] actual = repo.getItems();
         Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
     public void shouldAddNewProducts (){
-        ProductsRepository repo = new ProductsRepository();
         repo.save(item1);
         repo.save(item2);
         repo.save(item3);
@@ -33,6 +56,20 @@ public class ProductsRepositoryTest {
 
         Product[] expected ={item1, item2, item3, item4};
         Product[] actual = repo.getItems();
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldFindProductsById(){
+        repo.save(item1);
+        repo.save(item2);
+        repo.save(item3);
+        repo.save(item4);
+
+        Product[] expected = {item1};
+        Product[] actual = repo.findById(1);
+
         Assertions.assertArrayEquals(expected, actual);
 
     }
