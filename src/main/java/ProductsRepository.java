@@ -13,12 +13,12 @@ public class ProductsRepository {
         return null;
     }
 
-    public void save(Product item){
-        Product[] tmp = new Product[items.length +1];
-        for (int i =0; i < items.length; i++) {
+    public void save(Product item) {
+        Product[] tmp = new Product[items.length + 1];
+        for (int i = 0; i < items.length; i++) {
             tmp[i] = items[i];
         }
-        tmp[tmp.length-1] = item;
+        tmp[tmp.length - 1] = item;
         items = tmp;
     }
 
@@ -28,19 +28,19 @@ public class ProductsRepository {
                     "товар c ID " + id + " не найден"
             );
         }
-            Product[] tmp = new Product[items.length - 1];
-            int copyToIndex = 0;
-            for (Product item : items) {
-                if (item.getId() != id) {
-                    tmp[copyToIndex] = item;
-                    copyToIndex++;
-                }
+        Product[] tmp = new Product[items.length - 1];
+        int copyToIndex = 0;
+        for (Product item : items) {
+            if (item.getId() != id) {
+                tmp[copyToIndex] = item;
+                copyToIndex++;
             }
-            items = tmp;
+        }
+        items = tmp;
         return tmp;
     }
 
-    public Product[] getItems(){
+    public Product[] getItems() {
         return items;
     }
 }
