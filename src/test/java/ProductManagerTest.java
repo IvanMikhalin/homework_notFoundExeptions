@@ -29,9 +29,27 @@ public class ProductManagerTest {
     }
 
     @Test
-    public void shouldFindProductsByMatches() {
+    public void shouldFindSeveralProductsByMatches() {
         Product[] expected = {item1, item4};
         Product[] actual = manager.searchBy("Мир");
+
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldFindDedicatedProductsByMatches() {
+        Product[] expected = {item2};
+        Product[] actual = manager.searchBy("Сказ");
+
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldThrowMessageThenNoMatches() {
+        Product[] expected = {};
+        Product[] actual = manager.searchBy("Some Text");
 
         Assertions.assertArrayEquals(expected, actual);
 
